@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -42,9 +43,12 @@ public class Program {
 			Comparator<String> comp = (s1, s2) -> s1.toUpperCase().compareTo(s2.toUpperCase());       
 			
 			List<String> names = list.stream()
-					.map(p -> p.getPrice() < avg)
-					.sorted(comp)
+					.filter(p -> p.getPrice() < avg)
+					.map(p -> p.getName())
+					.sorted(comp) // sorted não funciona para tipo stream, só para Set
 					.collect(Collectors.toList());
+			
+			names.forEach(System.out::println);
 			
 			sc.close();
 			
